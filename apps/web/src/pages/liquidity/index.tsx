@@ -1,6 +1,5 @@
 import { PositionDetails } from '@pancakeswap/farms'
 import { useTranslation } from '@pancakeswap/localization'
-import { isStableSwapSupported } from '@pancakeswap/stable-swap-sdk'
 import {
   AddIcon,
   Button,
@@ -28,6 +27,7 @@ import { useAtom } from 'jotai'
 import NextLink from 'next/link'
 import { useRouter } from 'next/router'
 import React, { ReactNode, useCallback, useMemo, useState } from 'react'
+import { isMobile } from 'react-device-detect'
 import { styled } from 'styled-components'
 import atomWithStorageWithErrorCatch from 'utils/atomWithStorageWithErrorCatch'
 import { CHAIN_IDS } from 'utils/wagmi'
@@ -317,13 +317,11 @@ export default function PoolListPage() {
                 activeIndex={selectedTypeIndex}
                 onItemClick={(index) => setSelectedTypeIndex(index)}
                 variant="subtle"
+                fullWidth={isMobile}
               >
                 <ButtonMenuItem>{t('All')}</ButtonMenuItem>
                 <ButtonMenuItem>V2</ButtonMenuItem>
                 <ButtonMenuItem>V3</ButtonMenuItem>
-                <ButtonMenuItem display={isStableSwapSupported(chainId) ? 'inline-flex' : 'none'}>
-                  {t('StableSwap')}
-                </ButtonMenuItem>
               </ButtonMenu>
             </>
           }
