@@ -118,13 +118,6 @@ export default function PoolV2Page() {
                     {t('Remove')}
                   </Button>
                 </NextLinkFromReactRouter>
-                {isFarmExistActiveForPair === 'notexist' && (
-                  <NextLinkFromReactRouter to={`/v2/migrate/${pair?.liquidityToken?.address}`}>
-                    <Button variant="secondary" width="100%" disabled={!pair}>
-                      {t('Migrate')}
-                    </Button>
-                  </NextLinkFromReactRouter>
-                )}
               </>
             )
           }
