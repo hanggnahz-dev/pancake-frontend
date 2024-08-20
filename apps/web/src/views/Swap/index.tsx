@@ -12,9 +12,7 @@ import Page from '../Page'
 import { SwapFeaturesContext } from './SwapFeaturesContext'
 import { V3SwapForm } from './V3Swap'
 import PriceChartContainer from './components/Chart/PriceChartContainer'
-import { SwapSelection } from './components/SwapSelection'
 import { StyledInputCurrencyWrapper, StyledSwapContainer } from './styles'
-import { SwapType } from './types'
 
 export default function Swap() {
   const { query } = useRouter()
@@ -122,7 +120,7 @@ export default function Swap() {
         <Flex flexDirection="column">
           <StyledSwapContainer $isChartExpanded={isChartExpanded}>
             <StyledInputCurrencyWrapper mt={isChartExpanded ? '24px' : '0'}>
-              <SwapSelection swapType={SwapType.MARKET} />
+              {/* <SwapSelection swapType={SwapType.MARKET} /> */}
               <AppBody>
                 <V3SwapForm />
               </AppBody>

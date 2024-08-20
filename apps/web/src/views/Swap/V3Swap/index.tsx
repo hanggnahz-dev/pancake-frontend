@@ -3,10 +3,9 @@ import { Box } from '@pancakeswap/uikit'
 import { useMemo } from 'react'
 import { MMLiquidityWarning } from 'views/Swap/MMLinkPools/components/MMLiquidityWarning'
 import { shouldShowMMLiquidityError } from 'views/Swap/MMLinkPools/utils/exchange'
-import { BuyCryptoLink, FormHeader, FormMain, MMTradeDetail, PricingAndSlippage, TradeDetails } from './containers'
+import { FormHeader, FormMain, MMTradeDetail, PricingAndSlippage, TradeDetails } from './containers'
 import { CommitButton } from './containers/CommitButton'
 import { useAllTypeBestTrade } from './hooks/useAllTypeBestTrade'
-import { useCheckInsufficientError } from './hooks/useCheckSufficient'
 
 export function V3SwapForm() {
   const {
@@ -23,7 +22,6 @@ export function V3SwapForm() {
   } = useAllTypeBestTrade()
 
   const ammPrice = useMemo(() => (ammTrade ? SmartRouter.getExecutionPrice(ammTrade) : undefined), [ammTrade])
-  const insufficientFundCurrency = useCheckInsufficientError(ammTrade)
   const commitHooks = useMemo(() => {
     return {
       beforeCommit: pauseQuoting,
@@ -50,8 +48,6 @@ export function V3SwapForm() {
           />
         }
       />
-
-      <BuyCryptoLink currency={insufficientFundCurrency} />
 
       {isMMBetter ? (
         <MMTradeDetail loaded={!mmTrade.mmOrderBookTrade.isLoading} mmTrade={mmTrade.mmTradeInfo} />
