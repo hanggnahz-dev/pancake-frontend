@@ -13,16 +13,14 @@ import {
   Flex,
   HistoryIcon,
   IconButton,
-  Link,
   Tag,
   Text,
   useModal,
 } from '@pancakeswap/uikit'
-import { Liquidity, NextLinkFromReactRouter } from '@pancakeswap/widgets-internal'
+import { Liquidity } from '@pancakeswap/widgets-internal'
 import { AppBody, AppHeader } from 'components/App'
 import TransactionsModal from 'components/App/Transactions/TransactionsModal'
 import { RangeTag } from 'components/RangeTag'
-import { V3_MIGRATION_SUPPORTED_CHAINS } from 'config/constants/supportChains'
 import useAccountActiveChain from 'hooks/useAccountActiveChain'
 import useV2PairsByAccount from 'hooks/useV2Pairs'
 import { useV3Positions } from 'hooks/v3/useV3Positions'
@@ -65,9 +63,9 @@ export const StableContextProvider = (props: { pair: LPStablePair; account: stri
 
 enum FILTER {
   ALL = 0,
-  V3 = 1,
-  STABLE = 2,
-  V2 = 3,
+  V2 = 1,
+  V3 = 2,
+  STABLE = 3,
 }
 
 const hideClosePositionAtom = atomWithStorageWithErrorCatch('pcs:hide-close-position', false)
@@ -321,11 +319,11 @@ export default function PoolListPage() {
                 variant="subtle"
               >
                 <ButtonMenuItem>{t('All')}</ButtonMenuItem>
+                <ButtonMenuItem>V2</ButtonMenuItem>
                 <ButtonMenuItem>V3</ButtonMenuItem>
                 <ButtonMenuItem display={isStableSwapSupported(chainId) ? 'inline-flex' : 'none'}>
                   {t('StableSwap')}
                 </ButtonMenuItem>
-                <ButtonMenuItem>V2</ButtonMenuItem>
               </ButtonMenu>
             </>
           }
@@ -334,13 +332,14 @@ export default function PoolListPage() {
           {mainSection}
           {selectedTypeIndex === FILTER.V2 ? (
             <Liquidity.FindOtherLP>
-              {chainId && V3_MIGRATION_SUPPORTED_CHAINS.includes(chainId) && (
+              <></>
+              {/* {chainId && V3_MIGRATION_SUPPORTED_CHAINS.includes(chainId) && (
                 <NextLinkFromReactRouter style={{ marginTop: '8px' }} to="/migration">
                   <Button id="migration-link" variant="secondary" scale="sm">
                     {t('Migrate to V3')}
                   </Button>
                 </NextLinkFromReactRouter>
-              )}
+              )} */}
             </Liquidity.FindOtherLP>
           ) : null}
           {showAllPositionButton && (
@@ -355,11 +354,19 @@ export default function PoolListPage() {
           )}
         </Body>
         <CardFooter style={{ textAlign: 'center' }}>
-          <NextLink href="/add" passHref>
-            <Button id="join-pool-button" width="100%" startIcon={<AddIcon color="invertedContrast" />}>
-              {t('Add Liquidity')}
-            </Button>
-          </NextLink>
+          {selectedTypeIndex === FILTER.V3 ? (
+            <NextLink href="/add" passHref>
+              <Button id="join-pool-button" width="100%" startIcon={<AddIcon color="invertedContrast" />}>
+                {t('Add V3 Liquidity')}
+              </Button>
+            </NextLink>
+          ) : (
+            <NextLink href="/v2/add" passHref>
+              <Button id="join-pool-button" width="100%" startIcon={<AddIcon color="invertedContrast" />}>
+                {t('Add V2 Liquidity')}
+              </Button>
+            </NextLink>
+          )}
         </CardFooter>
       </AppBody>
     </Page>
