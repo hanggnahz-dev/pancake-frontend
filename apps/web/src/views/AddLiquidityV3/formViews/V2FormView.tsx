@@ -12,6 +12,7 @@ import {
   MessageText,
   ScanLink,
   Text,
+  useMatchBreakpoints,
 } from '@pancakeswap/uikit'
 import { useIsExpertMode } from '@pancakeswap/utils/user'
 import { ReactNode, useCallback, useMemo } from 'react'
@@ -70,6 +71,7 @@ export default function V2FormView({
     () => (pair && getBlockExploreLink(Pair.getAddress(pair.token0, pair.token1), 'address', chainId)) || undefined,
     [pair, chainId],
   )
+  const { isMobile } = useMatchBreakpoints()
 
   let buttons: ReactNode = null
   if (addIsUnsupported || addIsWarning) {
@@ -195,24 +197,26 @@ export default function V2FormView({
 
       <RightContainer>
         <AutoColumn pt="12px" gap="24px">
-          <DynamicSection disabled gap="12px">
-            <InfoBox message={t('Your position will appear here.')} icon={<BunnyKnownPlaceholder />} />
-            <RangeSelector
-              getDecrementLower={mockFn}
-              getIncrementLower={mockFn}
-              getDecrementUpper={mockFn}
-              getIncrementUpper={mockFn}
-              onLeftRangeInput={mockFn}
-              onRightRangeInput={mockFn}
-              currencyA={currencies[Field.CURRENCY_A]}
-              currencyB={currencies[Field.CURRENCY_B]}
-              feeAmount={0}
-              ticksAtLimit={{
-                [Bound.LOWER]: false,
-                [Bound.UPPER]: false,
-              }}
-            />
-          </DynamicSection>
+          {!isMobile && (
+            <DynamicSection disabled gap="12px">
+              <InfoBox message={t('Your position will appear here.')} icon={<BunnyKnownPlaceholder />} />
+              <RangeSelector
+                getDecrementLower={mockFn}
+                getIncrementLower={mockFn}
+                getDecrementUpper={mockFn}
+                getIncrementUpper={mockFn}
+                onLeftRangeInput={mockFn}
+                onRightRangeInput={mockFn}
+                currencyA={currencies[Field.CURRENCY_A]}
+                currencyB={currencies[Field.CURRENCY_B]}
+                feeAmount={0}
+                ticksAtLimit={{
+                  [Bound.LOWER]: false,
+                  [Bound.UPPER]: false,
+                }}
+              />
+            </DynamicSection>
+          )}
           <MediumOnly>{buttons}</MediumOnly>
         </AutoColumn>
       </RightContainer>
