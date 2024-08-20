@@ -1,6 +1,5 @@
 import { languageList, useTranslation } from '@pancakeswap/localization'
 import { Text, Menu as UikitMenu, footerLinks, useModal } from '@pancakeswap/uikit'
-import { BIG_ZERO } from '@pancakeswap/utils/bigNumber'
 import { NextLinkFromReactRouter } from '@pancakeswap/widgets-internal'
 import USCitizenConfirmModal from 'components/Modal/USCitizenConfirmModal'
 import { NetworkSwitcher } from 'components/NetworkSwitcher'
@@ -9,9 +8,8 @@ import { useCakePrice } from 'hooks/useCakePrice'
 import { usePerpUrl } from 'hooks/usePerpUrl'
 import useTheme from 'hooks/useTheme'
 import { IdType, useUserNotUsCitizenAcknowledgement } from 'hooks/useUserIsUsCitizenAcknowledgement'
-import { useWebNotifications } from 'hooks/useWebNotifications'
 import { useRouter } from 'next/router'
-import { Suspense, lazy, useCallback, useMemo } from 'react'
+import { lazy, useCallback, useMemo } from 'react'
 import { getOptionsUrl } from 'utils/getOptionsUrl'
 import GlobalSettings from './GlobalSettings'
 import { SettingsMode } from './GlobalSettings/types'
@@ -26,7 +24,6 @@ const LinkComponent = (linkProps) => {
 }
 
 const Menu = (props) => {
-  const { enabled } = useWebNotifications()
   const { chainId } = useActiveChainId()
   const { isDark, setTheme } = useTheme()
   const cakePrice = useCakePrice()
@@ -99,11 +96,6 @@ const Menu = (props) => {
         rightSide={
           <>
             <GlobalSettings mode={SettingsMode.GLOBAL} />
-            {enabled && (
-              <Suspense fallback={null}>
-                <Notifications />
-              </Suspense>
-            )}
             <NetworkSwitcher />
             <UserMenu />
           </>
@@ -114,14 +106,10 @@ const Menu = (props) => {
         currentLang={currentLanguage.code}
         langs={languageList}
         setLang={setLanguage}
-        cakePriceUsd={cakePrice.eq(BIG_ZERO) ? undefined : cakePrice}
         links={menuItems}
         subLinks={activeMenuItem?.hideSubNav || activeSubMenuItem?.hideSubNav ? [] : activeMenuItem?.items}
-        footerLinks={getFooterLinks}
         activeItem={activeMenuItem?.href}
         activeSubItem={activeSubMenuItem?.href}
-        buyCakeLabel={t('Buy CAKE')}
-        buyCakeLink="https://pancakeswap.finance/swap?outputCurrency=0x0e09fabb73bd3ade0a17ecc321fd13a19e81ce82&chainId=56"
         {...props}
       />
     </>
