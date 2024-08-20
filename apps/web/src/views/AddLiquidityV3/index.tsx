@@ -42,7 +42,6 @@ import FeeSelector from './formViews/V3FormView/components/FeeSelector'
 
 import { AprCalculator } from './components/AprCalculator'
 import { StableV3Selector } from './components/StableV3Selector'
-import { V2Selector } from './components/V2Selector'
 import StableFormView from './formViews/StableFormView'
 import V2FormView from './formViews/V2FormView'
 import V3FormView from './formViews/V3FormView'
@@ -318,8 +317,7 @@ export function UniversalAddLiquidity({
                     handleFeePoolSelect={handleFeePoolSelect}
                   />
                 )}
-
-              {((preferredSelectType === SELECTOR_TYPE.V2 && selectorType !== SELECTOR_TYPE.V3) ||
+              {/* {((preferredSelectType === SELECTOR_TYPE.V2 && selectorType !== SELECTOR_TYPE.V3) ||
                 selectorType === SELECTOR_TYPE.V2) && (
                 <V2Selector
                   isStable={Boolean(stableConfig.stableSwapConfig)}
@@ -329,8 +327,7 @@ export function UniversalAddLiquidity({
                     handleFeePoolSelect({ type })
                   }}
                 />
-              )}
-
+              )} */}
               {!stableConfig.stableSwapConfig && selectorType === SELECTOR_TYPE.V3 && (
                 <FeeSelector
                   currencyA={baseCurrency ?? undefined}

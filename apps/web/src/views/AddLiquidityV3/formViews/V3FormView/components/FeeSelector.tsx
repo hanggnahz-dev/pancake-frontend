@@ -2,7 +2,7 @@ import { ChainId } from '@pancakeswap/chains'
 import { farmsV3ConfigChainMap } from '@pancakeswap/farms/constants/v3'
 import { useTranslation } from '@pancakeswap/localization'
 import { Currency } from '@pancakeswap/sdk'
-import { AtomBox, AutoColumn, Button, CircleLoader, Text } from '@pancakeswap/uikit'
+import { AutoColumn, CircleLoader, Text } from '@pancakeswap/uikit'
 import tryParseAmount from '@pancakeswap/utils/tryParseAmount'
 import { FeeAmount } from '@pancakeswap/v3-sdk'
 import { useActiveChainId } from 'hooks/useActiveChainId'
@@ -195,41 +195,26 @@ export default function FeeSelector({
         )
       }
       content={
-        <>
-          <SelectContainer>
-            {FEE_TIERS.map((_feeAmount) => {
-              const { supportedChains } = FEE_AMOUNT_DETAIL[_feeAmount]
-              if (chainId && supportedChains.includes(chainId)) {
-                return (
-                  <FeeOption
-                    isLoading={isPending}
-                    largestUsageFeeTier={largestUsageFeeTier}
-                    feeAmount={_feeAmount}
-                    active={feeAmount === _feeAmount}
-                    onClick={() => handleFeePoolSelect({ type: SELECTOR_TYPE.V3, feeAmount: _feeAmount })}
-                    distributions={distributions}
-                    poolState={poolsByFeeTier[_feeAmount]}
-                    key={_feeAmount}
-                  />
-                )
-              }
-              return null
-            })}
-          </SelectContainer>
-          {currencyA && currencyB && handleSelectV2 && (
-            <AtomBox textAlign="center">
-              {/*
-                using state instead of replacing url to /v2 here
-                avoid pages keep in v2 when user change the tokens in selection
-              */}
-              <Button variant="text" onClick={handleSelectV2}>
-                <Text color="textSubtle" bold>
-                  {t('Add V2 Liquidity')}
-                </Text>
-              </Button>
-            </AtomBox>
-          )}
-        </>
+        <SelectContainer>
+          {FEE_TIERS.map((_feeAmount) => {
+            const { supportedChains } = FEE_AMOUNT_DETAIL[_feeAmount]
+            if (chainId && supportedChains.includes(chainId)) {
+              return (
+                <FeeOption
+                  isLoading={isPending}
+                  largestUsageFeeTier={largestUsageFeeTier}
+                  feeAmount={_feeAmount}
+                  active={feeAmount === _feeAmount}
+                  onClick={() => handleFeePoolSelect({ type: SELECTOR_TYPE.V3, feeAmount: _feeAmount })}
+                  distributions={distributions}
+                  poolState={poolsByFeeTier[_feeAmount]}
+                  key={_feeAmount}
+                />
+              )
+            }
+            return null
+          })}
+        </SelectContainer>
       }
     />
   )

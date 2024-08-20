@@ -30,7 +30,7 @@ export function StableV3Selector({
   handleFeePoolSelect: HandleFeePoolSelectFn
 }) {
   const { t } = useTranslation()
-  const [showOptions, setShowOptions] = useState(false)
+  const [showOptions, setShowOptions] = useState(true)
   const { chainId } = useActiveChainId()
 
   const { isPending, isError, largestUsageFeeTier, distributions } = useFeeTierDistribution(currencyA, currencyB)

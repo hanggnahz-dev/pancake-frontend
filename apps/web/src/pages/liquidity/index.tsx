@@ -354,16 +354,16 @@ export default function PoolListPage() {
           )}
         </Body>
         <CardFooter style={{ textAlign: 'center' }}>
-          {selectedTypeIndex === FILTER.V3 ? (
-            <NextLink href="/add" passHref>
-              <Button id="join-pool-button" width="100%" startIcon={<AddIcon color="invertedContrast" />}>
-                {t('Add V3 Liquidity')}
-              </Button>
-            </NextLink>
-          ) : (
+          {selectedTypeIndex === FILTER.V2 ? (
             <NextLink href="/v2/add" passHref>
               <Button id="join-pool-button" width="100%" startIcon={<AddIcon color="invertedContrast" />}>
                 {t('Add V2 Liquidity')}
+              </Button>
+            </NextLink>
+          ) : (
+            <NextLink href="/add" passHref>
+              <Button id="join-pool-button" width="100%" startIcon={<AddIcon color="invertedContrast" />}>
+                {t('Add V3 Liquidity')}
               </Button>
             </NextLink>
           )}
