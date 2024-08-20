@@ -1,4 +1,5 @@
-import { languageList, useTranslation } from '@pancakeswap/localization'
+import { useTranslation } from '@pancakeswap/localization'
+import { EN, ZHCN } from '@pancakeswap/localization/src/config/languages'
 import { Text, Menu as UikitMenu, footerLinks, useModal } from '@pancakeswap/uikit'
 import { NextLinkFromReactRouter } from '@pancakeswap/widgets-internal'
 import USCitizenConfirmModal from 'components/Modal/USCitizenConfirmModal'
@@ -104,7 +105,7 @@ const Menu = (props) => {
         isDark={isDark}
         toggleTheme={toggleTheme}
         currentLang={currentLanguage.code}
-        langs={languageList}
+        langs={[ZHCN, EN]}
         setLang={setLanguage}
         links={menuItems}
         subLinks={activeMenuItem?.hideSubNav || activeSubMenuItem?.hideSubNav ? [] : activeMenuItem?.items}
